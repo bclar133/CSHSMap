@@ -31,6 +31,7 @@
     <div id="viewport" class="viewport">
       <div id="map" class="map">
         <img id="mapImage" src="https://caloundrashs.eq.edu.au/OurSchool/MapsAndTransport/PublishingImages/Pages/School-Map/CSHS%20School%20Map.png" alt="Caloundra State High School campus map">
+        <div style="position:absolute;left:1128px;top:1592px;width:292px;height:25px;background:#fff;pointer-events:none;z-index:2" aria-hidden="true"></div>
         <svg id="overlay" viewBox="0 0 1456 2048" aria-label="Interactive map locations"></svg>
         <svg id="poiOverlay" viewBox="0 0 1456 2048" aria-label="Interactive map icons and map key"></svg>
         <div class="fixed-label" style="left:750px;top:565px">G Block</div>
@@ -52,6 +53,7 @@
 <script src="app.js"></script>
 <script src="details.js"></script>
 <script src="poi.js"></script>
+<script src="poi-fix.js"></script>
 <script>
   const dToilets = document.querySelector('#overlay [data-id="dtoilets"]');
   if (dToilets) dToilets.remove();

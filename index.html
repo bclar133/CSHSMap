@@ -28,7 +28,7 @@ header{height:78px;background:linear-gradient(100deg,#10284e,#173c6c);color:#fff
     <section class="card"><h2>Location details</h2><div id="details" class="detail-empty">Select a building, area or facility.</div></section>
   </aside>
   <main class="stage">
-    <div id="viewport" class="viewport"><div id="map" class="map"><img src="https://caloundrashs.eq.edu.au/OurSchool/MapsAndTransport/PublishingImages/Pages/School-Map/CSHS%20School%20Map.png" alt="Caloundra State High School campus map"><svg id="overlay" viewBox="0 0 1456 2048" aria-label="Interactive map locations"></svg></div></div>
+    <div id="viewport" class="viewport"><div id="map" class="map"><img id="mapImage" src="https://caloundrashs.eq.edu.au/OurSchool/MapsAndTransport/PublishingImages/Pages/School-Map/CSHS%20School%20Map.png" alt="Caloundra State High School campus map"><svg id="overlay" viewBox="0 0 1456 2048" aria-label="Interactive map locations"></svg></div></div>
     <div class="toolbar"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button><button id="reset" aria-label="Fit map">⌂</button></div>
     <div class="map-tip">Hover to highlight • Click for details</div><div id="mobileCard" class="mobile-card"></div>
   </main>
@@ -65,12 +65,13 @@ const zones=[
 ];
 const byId=Object.fromEntries(zones.map(z=>[z.id,z]));const overlay=document.getElementById('overlay');
 zones.forEach(z=>{const p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points',z.poly.map(v=>v.join(',')).join(' '));p.setAttribute('class','hit-zone');p.dataset.id=z.id;overlay.appendChild(p)});
-const viewport=document.getElementById('viewport'),map=document.getElementById('map'),search=document.getElementById('search'),results=document.getElementById('results'),details=document.getElementById('details'),mobileCard=document.getElementById('mobileCard');let scale=.45,tx=0,ty=0,dragging=false,dragStart=null;
+const viewport=document.getElementById('viewport'),map=document.getElementById('map'),search=document.getElementById('search'),results=document.getElementById('results'),details=document.getElementById('details'),mobileCard=document.getElementById('mobileCard'),mapImage=document.getElementById('mapImage');
+let scale=.45,tx=0,ty=0,dragging=false,dragStart=null;
 function centroid(poly){let x=0,y=0;for(const p of poly){x+=p[0];y+=p[1]}return[x/poly.length,y/poly.length]}
-function applyTransform(){const r=viewport.getBoundingClientRect();map.style.transform=`translate(${r.width/2+tx}px,${r.height/2+ty}px) scale(${scale}) translate(-728px,-1024px)`}
-function fitMap(){const r=viewport.getBoundingClientRect();scale=Math.min((r.width-24)/1456,(r.height-24)/2048);scale=Math.max(scale,.28);tx=0;ty=0;applyTransform()}
-function zoom(mult,cx=viewport.clientWidth/2,cy=viewport.clientHeight/2){const old=scale;scale=Math.max(.25,Math.min(2.8,scale*mult));const k=scale/old;tx=(tx+viewport.clientWidth/2-cx)*k-viewport.clientWidth/2+cx;ty=(ty+viewport.clientHeight/2-cy)*k-viewport.clientHeight/2+cy;applyTransform()}
-document.getElementById('zoomIn').onclick=()=>zoom(1.2);document.getElementById('zoomOut').onclick=()=>zoom(1/1.2);document.getElementById('reset').onclick=fitMap;window.addEventListener('resize',fitMap);setTimeout(fitMap,20);
+function applyTransform(){map.style.transform=`translate(${tx}px,${ty}px) scale(${scale}) translate(-728px,-1024px)`}
+function fitMap(){const r=viewport.getBoundingClientRect();if(!r.width||!r.height)return;scale=Math.min((r.width-24)/1456,(r.height-24)/2048);scale=Math.max(scale,.20);tx=0;ty=0;applyTransform()}
+function zoom(mult,cx=viewport.clientWidth/2,cy=viewport.clientHeight/2){const old=scale;scale=Math.max(.20,Math.min(2.8,scale*mult));const k=scale/old;tx=(tx+viewport.clientWidth/2-cx)*k-viewport.clientWidth/2+cx;ty=(ty+viewport.clientHeight/2-cy)*k-viewport.clientHeight/2+cy;applyTransform()}
+document.getElementById('zoomIn').onclick=()=>zoom(1.2);document.getElementById('zoomOut').onclick=()=>zoom(1/1.2);document.getElementById('reset').onclick=fitMap;window.addEventListener('resize',fitMap);window.addEventListener('load',fitMap);mapImage.addEventListener('load',fitMap);requestAnimationFrame(()=>requestAnimationFrame(fitMap));
 viewport.addEventListener('wheel',e=>{e.preventDefault();const r=viewport.getBoundingClientRect();zoom(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top)},{passive:false});viewport.addEventListener('pointerdown',e=>{if(e.target.classList.contains('hit-zone'))return;dragging=true;viewport.classList.add('dragging');viewport.setPointerCapture(e.pointerId);dragStart={x:e.clientX-tx,y:e.clientY-ty}});viewport.addEventListener('pointermove',e=>{if(!dragging)return;tx=e.clientX-dragStart.x;ty=e.clientY-dragStart.y;applyTransform()});viewport.addEventListener('pointerup',()=>{dragging=false;viewport.classList.remove('dragging')});viewport.addEventListener('pointercancel',()=>{dragging=false;viewport.classList.remove('dragging')});
 function showDetails(id){const z=byId[id],height=z.height?`<div class="detail-height"><strong>Building height:</strong> ${z.height}</div>`:'';const html=`<div class="detail-name">${z.name}</div><div class="detail-category">${z.category}</div>${height}`;details.className='';details.innerHTML=html;mobileCard.innerHTML=html;mobileCard.classList.add('show')}
 overlay.addEventListener('click',e=>{if(e.target.classList.contains('hit-zone')){e.stopPropagation();showDetails(e.target.dataset.id)}});

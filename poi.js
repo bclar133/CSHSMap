@@ -4,7 +4,7 @@
 const poiGroups = [
   { id:'hoy', label:'HOY Hub', icons:[[714,982]], key:[1066,1456,360,46] },
   { id:'canteen-key', label:'Canteen & Uniform Shop', icons:[[488,660]], key:[1066,1513,360,48] },
-  { id:'student-services-key', label:'Student Services', icons:[[423,430]], key:[1066,1566,360,58] },
+  { id:'student-services-key', label:'Student Services', icons:[[423,430]], key:[1066,1566,360,48] },
   { id:'computer-support-key', label:'Computer Support', icons:[[392,666]], key:[1066,1619,360,46] },
   { id:'student-counter-key', label:'Student Counter / Sick Bay', icons:[[538,414]], key:[1066,1668,360,60] },
   { id:'bus', label:'Bus Stop', icons:[[1415,754]], key:[1066,1732,360,48] },

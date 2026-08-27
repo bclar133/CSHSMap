@@ -4,80 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Caloundra State High School — Interactive Map</title>
-<style>
-:root{--navy:#152d56;--gold:#d2a45d;--ink:#17314f;--line:#d8e0e8;--bg:#eef2f5;--hover:#22a6d5}
-*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}body{overflow:hidden}
-header{height:78px;background:linear-gradient(100deg,#10284e,#173c6c);color:#fff;display:flex;align-items:center;gap:16px;padding:10px 18px;border-bottom:3px solid var(--gold);position:relative;z-index:20}
-.brand{min-width:275px}.brand strong{display:block;font-size:21px;line-height:1.05}.brand span{color:#e3bc79;font-size:13px;font-weight:700}
-.search-wrap{margin-left:auto;position:relative;width:min(500px,48vw)}.search-wrap input{width:100%;border:0;outline:0;border-radius:12px;padding:12px 42px 12px 15px;font-size:15px;box-shadow:0 2px 10px #00172d45}.search-icon{position:absolute;right:14px;top:8px;color:#60748a;font-size:22px;pointer-events:none}
-.results{position:absolute;top:48px;left:0;right:0;background:#fff;color:var(--ink);border-radius:11px;overflow:hidden;box-shadow:0 12px 32px #00182d45;max-height:360px;overflow-y:auto}.results[hidden]{display:none}.result{width:100%;border:0;background:#fff;text-align:left;padding:10px 13px;cursor:pointer;border-bottom:1px solid #e8edf2}.result:hover{background:#f2f6fa}.result strong{display:block;font-size:13px}.result small{color:#6c7f92}
-.app{height:calc(100% - 78px);display:grid;grid-template-columns:300px 1fr}.sidebar{background:#f8fafc;border-right:1px solid var(--line);padding:14px;overflow:auto}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 5px 18px #17314d0e}.card h2{margin:0 0 7px;font-size:16px;color:var(--navy)}.card p{margin:0;font-size:13px;line-height:1.45;color:#5f7184}.hint{margin-top:9px;background:#f4f7fa;padding:9px 10px;border-radius:9px;font-size:12px;color:#607386}.detail-empty{color:#6c7e90;font-size:13px;text-align:center;padding:7px}.detail-name{font-weight:800;font-size:19px;color:var(--navy);margin-bottom:4px}.detail-category{font-size:11px;font-weight:800;letter-spacing:.05em;color:#72869a;text-transform:uppercase}.detail-height{margin-top:11px;padding:8px 9px;background:#f4f7fa;border-radius:9px;font-size:12px}
-.stage{position:relative;overflow:hidden;background:#d8dfda}.viewport{position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none}.viewport.dragging{cursor:grabbing}.map{position:absolute;left:50%;top:50%;width:1456px;height:2048px;transform-origin:0 0;will-change:transform}.map img{position:absolute;inset:0;width:1456px;height:2048px;user-select:none;pointer-events:none;display:block}.map svg{position:absolute;inset:0;width:1456px;height:2048px;overflow:visible}.hit-zone{fill:var(--hover);fill-opacity:0;stroke:var(--hover);stroke-opacity:0;stroke-width:5;cursor:pointer;transition:fill-opacity .12s,stroke-opacity .12s,filter .12s}.hit-zone:hover{fill-opacity:.28;stroke-opacity:1;filter:drop-shadow(0 2px 3px #0c355b77)}.hit-zone.flash{animation:flash 1.5s ease-out}@keyframes flash{0%,40%{fill-opacity:.42;stroke-opacity:1}100%{fill-opacity:0;stroke-opacity:0}}
-.toolbar{position:absolute;right:16px;top:16px;display:grid;gap:8px;z-index:10}.toolbar button{width:42px;height:42px;border-radius:11px;border:1px solid #ced8e3;background:#fff;color:var(--navy);font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px #17314d1f}.map-tip{position:absolute;left:16px;bottom:14px;background:#102f5ae8;color:#fff;padding:8px 11px;border-radius:10px;font-size:11px;z-index:10}.mobile-card{display:none}
-@media(max-width:850px){header{height:70px;padding:8px 10px}.brand{min-width:0}.brand strong{font-size:16px}.brand span{font-size:11px}.search-wrap{width:48vw}.search-wrap input{font-size:13px;padding:10px 35px 10px 11px}.app{height:calc(100% - 70px);grid-template-columns:1fr}.sidebar{display:none}.mobile-card{display:none;position:absolute;left:10px;right:10px;bottom:10px;background:#fff;border-radius:13px;padding:11px;box-shadow:0 8px 28px #00172d55;z-index:15}.mobile-card.show{display:block}}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
   <div class="brand"><strong>Caloundra SHS Interactive Map</strong><span>Testing prototype</span></div>
-  <div class="search-wrap"><input id="search" type="search" placeholder="Search buildings, ovals or facilities…" autocomplete="off"><div class="search-icon">⌕</div><div id="results" class="results" hidden></div></div>
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Search buildings, ovals or facilities…" autocomplete="off">
+    <div class="search-icon">⌕</div>
+    <div id="results" class="results" hidden></div>
+  </div>
 </header>
 <div class="app">
   <aside class="sidebar">
-    <section class="card"><h2>Campus Map</h2><p>The existing school map is the fixed base. Interactive hover and search areas sit invisibly over the image.</p><div class="hint">Hover to highlight. Click for details. Search to jump to a location.</div></section>
-    <section class="card"><h2>Location details</h2><div id="details" class="detail-empty">Select a building, area or facility.</div></section>
+    <section class="card">
+      <h2>Campus Map</h2>
+      <p>The existing school map is the fixed base. Interactive hover and search areas sit invisibly over the image.</p>
+      <div class="hint">Hover to highlight. Click for details. Search to jump to a location.</div>
+    </section>
+    <section class="card">
+      <h2>Location details</h2>
+      <div id="details" class="detail-empty">Select a building, area or facility.</div>
+    </section>
   </aside>
   <main class="stage">
-    <div id="viewport" class="viewport"><div id="map" class="map"><img id="mapImage" src="https://caloundrashs.eq.edu.au/OurSchool/MapsAndTransport/PublishingImages/Pages/School-Map/CSHS%20School%20Map.png" alt="Caloundra State High School campus map"><svg id="overlay" viewBox="0 0 1456 2048" aria-label="Interactive map locations"></svg></div></div>
-    <div class="toolbar"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button><button id="reset" aria-label="Fit map">⌂</button></div>
-    <div class="map-tip">Hover to highlight • Click for details</div><div id="mobileCard" class="mobile-card"></div>
+    <div id="viewport" class="viewport">
+      <div id="map" class="map">
+        <img id="mapImage" src="https://caloundrashs.eq.edu.au/OurSchool/MapsAndTransport/PublishingImages/Pages/School-Map/CSHS%20School%20Map.png" alt="Caloundra State High School campus map">
+        <svg id="overlay" viewBox="0 0 1456 2048" aria-label="Interactive map locations"></svg>
+        <div class="fixed-label" style="left:750px;top:565px">G Block</div>
+        <div class="fixed-label" style="left:750px;top:645px">G Block</div>
+        <div class="toilet-marker" style="left:390px;top:986px" aria-label="D Block toilets">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect x="9" y="4" width="13" height="5" rx="1.5" fill="white"/>
+            <path d="M10 10h12v5c0 5.7-3.8 9-8 9h-4V10Z" fill="white"/>
+            <rect x="10" y="24" width="12" height="3.5" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button id="zoomIn" aria-label="Zoom in">+</button>
+      <button id="zoomOut" aria-label="Zoom out">−</button>
+      <button id="reset" aria-label="Fit map">⌂</button>
+    </div>
+    <div class="map-tip">Hover to highlight • Click for details</div>
+    <div id="mobileCard" class="mobile-card"></div>
   </main>
 </div>
-<script>
-const zones=[
-{id:'secondoval',name:'Second Oval',category:'Sports & Recreation',height:'',aliases:'second oval soccer',poly:[[80,1490],[1035,1490],[1035,2025],[82,2025]]},
-{id:'mainoval',name:'Main Oval',category:'Sports & Recreation',height:'',aliases:'rugby league cricket general use long jump',poly:[[415,1115],[1035,1115],[1035,1505],[415,1505]]},
-{id:'a',name:'A Block',category:'Building',height:'2 storeys',aliases:'A administration student services',poly:[[310,375],[395,375],[395,420],[515,420],[515,495],[400,495],[400,510],[310,510]]},
-{id:'b',name:'Industrial Technology B Block',category:'Building',height:'Mixed height — parts are 2 storeys',aliases:'B block industrial technology workshops',poly:[[178,540],[378,540],[378,700],[178,700]]},
-{id:'c',name:'Digital Technology C Block',category:'Building',height:'2 storeys',aliases:'C block digital technology computers',poly:[[325,648],[632,648],[632,760],[325,760]]},
-{id:'d',name:'Food Technology & Maths D Block',category:'Building',height:'2 storeys',aliases:'D block food technology maths',poly:[[350,800],[735,800],[735,890],[350,890]]},
-{id:'e1',name:'E Block 1',category:'Building',height:'1 storey',aliases:'E block maths',poly:[[138,867],[265,867],[265,930],[138,930]]},
-{id:'e2',name:'E Block 2',category:'Building',height:'1 storey',aliases:'E block maths',poly:[[140,936],[265,936],[265,1040],[140,1040]]},
-{id:'g1',name:'G Block 1',category:'Science',height:'1 storey',aliases:'G block science',poly:[[675,445],[835,445],[835,510],[675,510]]},
-{id:'g2',name:'G Block 2',category:'Science',height:'1 storey',aliases:'G block science',poly:[[675,515],[835,515],[835,585],[675,585]]},
-{id:'g3',name:'G Block 3',category:'Science',height:'1 storey',aliases:'G block science',poly:[[675,590],[835,590],[835,665],[675,665]]},
-{id:'h',name:'English H Block',category:'Building',height:'1 storey',aliases:'H block English',poly:[[940,435],[1090,420],[1135,525],[965,600],[905,510]]},
-{id:'p',name:'Performing Arts P Block',category:'Arts',height:'1 storey',aliases:'P block performing arts drama',poly:[[1192,372],[1375,372],[1375,555],[1192,555]]},
-{id:'k',name:'Art K Block',category:'Arts',height:'1 storey',aliases:'K block art visual arts',poly:[[1110,590],[1260,590],[1300,650],[1250,725],[1135,742],[1090,680]]},
-{id:'resource',name:'Resource Centre',category:'Student Services',height:'1 storey',aliases:'library resource centre',poly:[[800,770],[1015,770],[1015,900],[800,900]]},
-{id:'student',name:'Student Centre',category:'Student Services',height:'Tall single-volume structure — approximately 2-storey height',aliases:'student centre support',poly:[[1050,760],[1265,775],[1305,860],[1260,975],[1120,980],[1030,895]]},
-{id:'j',name:'Year 7 Hub J Block',category:'Building',height:'1 storey',aliases:'J block year 7 hub',poly:[[680,935],[920,935],[920,1060],[680,1060]]},
-{id:'m',name:'Music M Block',category:'Arts',height:'1 storey',aliases:'M block music',poly:[[1080,1010],[1248,1010],[1248,1115],[1080,1115]]},
-{id:'n',name:'Humanities & Inclusive Learning N Block',category:'Building',height:'2 storeys',aliases:'N block humanities inclusive learning',poly:[[1030,1160],[1210,1160],[1210,1325],[1030,1325]]},
-{id:'canteen',name:'Canteen & Uniform Shop',category:'Facility',height:'',aliases:'canteen uniform shop food',poly:[[462,630],[515,630],[515,690],[462,690]]},
-{id:'studentservices',name:'Student Services',category:'Facility',height:'',aliases:'guidance officer psychologist student services',poly:[[402,400],[455,400],[455,460],[402,460]]},
-{id:'studentcounter',name:'Student Counter / Sick Bay',category:'Facility',height:'',aliases:'student counter sick bay',poly:[[520,380],[570,380],[570,435],[520,435]]},
-{id:'computersupport',name:'Computer Support',category:'Facility',height:'',aliases:'computer support IT help',poly:[[380,645],[425,645],[425,690],[380,690]]},
-{id:'studententry',name:'Student Entry',category:'Entry / Exit',height:'',aliases:'student entrance queen street entry',poly:[[575,355],[650,355],[650,420],[575,420]]},
-{id:'amphitheatre',name:'Amphitheatre',category:'Outdoor Area',height:'',aliases:'amphitheater outdoor seating',poly:[[300,1020],[505,1020],[505,1110],[465,1110],[465,1210],[300,1210]]},
-{id:'courts',name:'Multi-purpose Courts',category:'Sports & Recreation',height:'',aliases:'basketball netball tennis courts multipurpose',poly:[[660,1570],[1005,1570],[1005,1710],[660,1710]]},
-{id:'ttc',name:'Trade Training Centre',category:'Specialist Facility',height:'1 storey',aliases:'trade training TTC technical',poly:[[615,1870],[1000,1870],[1000,2028],[615,2028]]}
-];
-const byId=Object.fromEntries(zones.map(z=>[z.id,z]));const overlay=document.getElementById('overlay');
-zones.forEach(z=>{const p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points',z.poly.map(v=>v.join(',')).join(' '));p.setAttribute('class','hit-zone');p.dataset.id=z.id;overlay.appendChild(p)});
-const viewport=document.getElementById('viewport'),map=document.getElementById('map'),search=document.getElementById('search'),results=document.getElementById('results'),details=document.getElementById('details'),mobileCard=document.getElementById('mobileCard'),mapImage=document.getElementById('mapImage');
-let scale=.45,tx=0,ty=0,dragging=false,dragStart=null;
-function centroid(poly){let x=0,y=0;for(const p of poly){x+=p[0];y+=p[1]}return[x/poly.length,y/poly.length]}
-function applyTransform(){map.style.transform=`translate(${tx}px,${ty}px) scale(${scale}) translate(-728px,-1024px)`}
-function fitMap(){const r=viewport.getBoundingClientRect();if(!r.width||!r.height)return;scale=Math.min((r.width-24)/1456,(r.height-24)/2048);scale=Math.max(scale,.20);tx=0;ty=0;applyTransform()}
-function zoom(mult,cx=viewport.clientWidth/2,cy=viewport.clientHeight/2){const old=scale;scale=Math.max(.20,Math.min(2.8,scale*mult));const k=scale/old;tx=(tx+viewport.clientWidth/2-cx)*k-viewport.clientWidth/2+cx;ty=(ty+viewport.clientHeight/2-cy)*k-viewport.clientHeight/2+cy;applyTransform()}
-document.getElementById('zoomIn').onclick=()=>zoom(1.2);document.getElementById('zoomOut').onclick=()=>zoom(1/1.2);document.getElementById('reset').onclick=fitMap;window.addEventListener('resize',fitMap);window.addEventListener('load',fitMap);mapImage.addEventListener('load',fitMap);requestAnimationFrame(()=>requestAnimationFrame(fitMap));
-viewport.addEventListener('wheel',e=>{e.preventDefault();const r=viewport.getBoundingClientRect();zoom(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top)},{passive:false});viewport.addEventListener('pointerdown',e=>{if(e.target.classList.contains('hit-zone'))return;dragging=true;viewport.classList.add('dragging');viewport.setPointerCapture(e.pointerId);dragStart={x:e.clientX-tx,y:e.clientY-ty}});viewport.addEventListener('pointermove',e=>{if(!dragging)return;tx=e.clientX-dragStart.x;ty=e.clientY-dragStart.y;applyTransform()});viewport.addEventListener('pointerup',()=>{dragging=false;viewport.classList.remove('dragging')});viewport.addEventListener('pointercancel',()=>{dragging=false;viewport.classList.remove('dragging')});
-function showDetails(id){const z=byId[id],height=z.height?`<div class="detail-height"><strong>Building height:</strong> ${z.height}</div>`:'';const html=`<div class="detail-name">${z.name}</div><div class="detail-category">${z.category}</div>${height}`;details.className='';details.innerHTML=html;mobileCard.innerHTML=html;mobileCard.classList.add('show')}
-overlay.addEventListener('click',e=>{if(e.target.classList.contains('hit-zone')){e.stopPropagation();showDetails(e.target.dataset.id)}});
-function focusZone(id){const z=byId[id],[cx,cy]=centroid(z.poly);scale=Math.max(scale,.82);tx=(728-cx)*scale;ty=(1024-cy)*scale;applyTransform();const el=overlay.querySelector(`[data-id="${id}"]`);el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600);showDetails(id)}
-function searchNow(){const q=search.value.trim().toLowerCase();results.innerHTML='';if(!q){results.hidden=true;return}const hits=zones.filter(z=>(z.name+' '+z.category+' '+z.aliases).toLowerCase().includes(q)).slice(0,12);if(!hits.length){results.innerHTML='<div class="result"><strong>No match</strong><small>Try a building letter or facility name.</small></div>'}else{for(const z of hits){const b=document.createElement('button');b.className='result';b.innerHTML=`<strong>${z.name}</strong><small>${z.category}</small>`;b.onclick=()=>{search.value=z.name;results.hidden=true;focusZone(z.id)};results.appendChild(b)}}results.hidden=false}
-search.addEventListener('input',searchNow);search.addEventListener('keydown',e=>{if(e.key==='Escape')results.hidden=true});document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))results.hidden=true});
-</script>
+<script src="app.js"></script>
 </body>
 </html>

@@ -160,7 +160,7 @@ addSearchItem({id:'p-dance', name:'Dance studio', parentId:'p', category:'P Bloc
 patchZone('student', {
   name: 'S Block (Student Centre)',
   aliases: 'S block student centre sports hall gym classroom PE staffroom change rooms changerooms physical education',
-  description: 'S Block is the Student Centre, a tall single-volume sports and Physical Education facility.',
+  description: 'S Block is the Student Centre and contains sports and Physical Education facilities.',
   features: ['Sports hall', 'Gym', 'Classroom', 'PE Staffroom', 'Change rooms']
 });
 addSearchItem({id:'s-sportshall', name:'Sports hall', parentId:'student', category:'S Block', aliases:'sports hall indoor sport student centre'});
@@ -178,4 +178,17 @@ showSearchItem = function(item) {
   details.innerHTML = html;
   mobileCard.innerHTML = html;
   mobileCard.classList.add('show');
+};
+
+// Only call out height for buildings that are fully two storeys.
+// Mixed-height B Block and the tall single-volume Student Centre are not described by height.
+renderDetails = function(z) {
+  const twoStoreyIds = new Set(['a','c','d','n']);
+  const height = twoStoreyIds.has(z.id) && z.height
+    ? `<div class="detail-height"><strong>Building height:</strong> ${z.height}</div>`
+    : '';
+  const features = z.features?.length
+    ? `<div class="detail-heading">What you'll find here</div><ul class="detail-list">${z.features.map(f=>`<li>${f}</li>`).join('')}</ul>`
+    : '';
+  return `<div class="detail-name">${z.name}</div><div class="detail-category">${z.category}</div>${height}<div class="detail-copy">${z.description||''}</div>${features}`;
 };

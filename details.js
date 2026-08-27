@@ -169,6 +169,11 @@ addSearchItem({id:'s-classroom', name:'Classroom', parentId:'student', category:
 addSearchItem({id:'s-pestaff', name:'PE Staffroom', parentId:'student', category:'S Block', aliases:'PE staffroom physical education staff room teachers'});
 addSearchItem({id:'s-changerooms', name:'Change rooms', parentId:'student', category:'S Block', aliases:'change room change rooms changerooms changing rooms locker rooms'});
 
+// Trade Training Centre
+patchZone('ttc', {
+  description: 'Trade Training Centre at the southern end of the school grounds. Visit the <a href="https://sunshinecoastttc.eq.edu.au/" target="_blank" rel="noopener noreferrer">Sunshine Coast Technical Trade Training Centre website</a>.'
+});
+
 // Support custom wording for search items such as F Block while retaining the existing parent hotspot.
 showSearchItem = function(item) {
   const parent = byId[item.parentId];

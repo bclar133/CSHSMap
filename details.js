@@ -94,6 +94,81 @@ addSearchItem({id:'h-classrooms', name:'English classrooms', parentId:'h', categ
 addSearchItem({id:'h-pd', name:'Staff PD Room', parentId:'h', category:'H Block', aliases:'staff PD room professional development room'});
 addSearchItem({id:'h-toilets', name:'Toilets', parentId:'h', category:'H Block', aliases:'toilet toilets bathroom bathrooms WC'});
 
+// J Block
+patchZone('j', {
+  aliases: 'J block Year 7 Hub science staffroom HOY head of year hub toilets classrooms',
+  description: 'Year 7 Hub and teaching block in the centre of the campus.',
+  features: ['Science Staffroom', 'HoY Hub', 'Toilets', 'Classrooms']
+});
+addSearchItem({id:'j-sciencestaff', name:'Science Staffroom', parentId:'j', category:'J Block', aliases:'science staffroom staff room teachers'});
+addSearchItem({id:'j-hoy', name:'HoY Hub', parentId:'j', category:'J Block', aliases:'HOY head of year hub year 7'});
+addSearchItem({id:'j-toilets', name:'Toilets', parentId:'j', category:'J Block', aliases:'toilet toilets bathroom bathrooms WC'});
+addSearchItem({id:'j-classrooms', name:'Classrooms', parentId:'j', category:'J Block', aliases:'classroom classrooms teaching rooms'});
+
+// K Block
+patchZone('k', {
+  aliases: 'K block art visual arts classrooms green screen room greenscreen media',
+  description: 'Visual Art teaching block on the eastern side of the upper campus.',
+  features: ['Art classrooms', 'Green screen room']
+});
+addSearchItem({id:'k-art', name:'Art classrooms', parentId:'k', category:'K Block', aliases:'art visual arts classroom classrooms'});
+addSearchItem({id:'k-greenscreen', name:'Green screen room', parentId:'k', category:'K Block', aliases:'green screen greenscreen media room'});
+
+// L Block / Resource Centre
+patchZone('resource', {
+  name: 'L Block (Resource Centre)',
+  aliases: 'L block resource centre library classrooms staff wellbeing room offices study areas',
+  description: 'L Block houses the Resource Centre and a range of learning, staff and study spaces.',
+  features: ['Library', 'Classrooms', 'Staff Wellbeing Room', 'Offices', 'Study areas']
+});
+addSearchItem({id:'l-library', name:'Library', parentId:'resource', category:'L Block', aliases:'library resource centre books'});
+addSearchItem({id:'l-classrooms', name:'Classrooms', parentId:'resource', category:'L Block', aliases:'classroom classrooms teaching rooms'});
+addSearchItem({id:'l-wellbeing', name:'Staff Wellbeing Room', parentId:'resource', category:'L Block', aliases:'staff wellbeing well-being room'});
+addSearchItem({id:'l-offices', name:'Offices', parentId:'resource', category:'L Block', aliases:'office offices staff'});
+addSearchItem({id:'l-study', name:'Study areas', parentId:'resource', category:'L Block', aliases:'study area study areas quiet study'});
+
+// M Block
+patchZone('m', {
+  aliases: 'M block music music classrooms',
+  description: 'Music teaching block on the eastern side of the campus.',
+  features: ['Music classrooms']
+});
+addSearchItem({id:'m-music', name:'Music classrooms', parentId:'m', category:'M Block', aliases:'music classroom classrooms'});
+
+// N Block
+patchZone('n', {
+  aliases: 'N block humanities humanities staffroom inclusive learning staffroom classrooms office F block inclusive learning',
+  description: 'Two-storey N Block containing Humanities and Inclusive Learning spaces.',
+  features: ['Humanities Staffroom', 'Inclusive Learning Staffroom', 'Classrooms', 'Office']
+});
+addSearchItem({id:'n-humanitiesstaff', name:'Humanities Staffroom', parentId:'n', category:'N Block', aliases:'humanities staffroom staff room teachers'});
+addSearchItem({id:'n-inclusivestaff', name:'Inclusive Learning Staffroom', parentId:'n', category:'N Block', aliases:'inclusive learning staffroom staff room teachers'});
+addSearchItem({id:'n-classrooms', name:'Classrooms', parentId:'n', category:'N Block', aliases:'classroom classrooms humanities inclusive learning'});
+addSearchItem({id:'n-office', name:'Office', parentId:'n', category:'N Block', aliases:'office administration'});
+
+// P Block
+patchZone('p', {
+  aliases: 'P block performing arts arts staffroom dance studio dance performing arts',
+  description: 'Performing Arts block near Queen Street.',
+  features: ['Performing Arts', 'Arts Staffroom', 'Dance studio']
+});
+addSearchItem({id:'p-performing', name:'Performing Arts', parentId:'p', category:'P Block', aliases:'performing arts performance drama'});
+addSearchItem({id:'p-staffroom', name:'Arts Staffroom', parentId:'p', category:'P Block', aliases:'arts staffroom staff room teachers'});
+addSearchItem({id:'p-dance', name:'Dance studio', parentId:'p', category:'P Block', aliases:'dance studio dance room'});
+
+// S Block / Student Centre
+patchZone('student', {
+  name: 'S Block (Student Centre)',
+  aliases: 'S block student centre sports hall gym classroom PE staffroom change rooms changerooms physical education',
+  description: 'S Block is the Student Centre, a tall single-volume sports and Physical Education facility.',
+  features: ['Sports hall', 'Gym', 'Classroom', 'PE Staffroom', 'Change rooms']
+});
+addSearchItem({id:'s-sportshall', name:'Sports hall', parentId:'student', category:'S Block', aliases:'sports hall indoor sport student centre'});
+addSearchItem({id:'s-gym', name:'Gym', parentId:'student', category:'S Block', aliases:'gym gymnasium fitness'});
+addSearchItem({id:'s-classroom', name:'Classroom', parentId:'student', category:'S Block', aliases:'classroom teaching room'});
+addSearchItem({id:'s-pestaff', name:'PE Staffroom', parentId:'student', category:'S Block', aliases:'PE staffroom physical education staff room teachers'});
+addSearchItem({id:'s-changerooms', name:'Change rooms', parentId:'student', category:'S Block', aliases:'change room change rooms changerooms changing rooms locker rooms'});
+
 // Support custom wording for search items such as F Block while retaining the existing parent hotspot.
 showSearchItem = function(item) {
   const parent = byId[item.parentId];

@@ -1,0 +1,14 @@
+/* POI overlay interaction fix.
+   The SVG overlay itself must not block the building hover polygons below it.
+   Only the actual icon/key hit shapes receive pointer events. */
+#poiOverlay {
+  pointer-events: none;
+}
+#poiOverlay .poi-icon-hit,
+#poiOverlay .poi-key-hit {
+  pointer-events: all;
+}
+#poiOverlay .poi-icon-glow,
+#poiOverlay .poi-key-glow {
+  pointer-events: none;
+}
